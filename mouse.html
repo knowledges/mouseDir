@@ -10,12 +10,156 @@
 		<img src="images/1.jpg" alt="">
 		<span class="mask" alt="模板">哥斯拉</span>
 	</div>
+	
+	<div class="mouseDir">
+		<img src="images/1.jpg" alt="">
+		<span class="mask" alt="模板">哥斯拉</span>
+	</div>
+	<div class="mouseDir">
+		<img src="images/1.jpg" alt="">
+		<span class="mask" alt="模板">哥斯拉</span>
+	</div>
+	<div class="mouseDir">
+		<img src="images/1.jpg" alt="">
+		<span class="mask" alt="模板">哥斯拉</span>
+	</div>
+	<div class="mouseDir">
+		<img src="images/1.jpg" alt="">
+		<span class="mask" alt="模板">哥斯拉</span>
+	</div>
+	<div class="mouseDir">
+		<img src="images/1.jpg" alt="">
+		<span class="mask" alt="模板">哥斯拉</span>
+	</div>
+	<div class="mouseDir">
+		<img src="images/1.jpg" alt="">
+		<span class="mask" alt="模板">哥斯拉</span>
+	</div>
 </body>
+<script src="js/jquery-1.10.2.js"></script>
 <script>
-	window.onload = function () {
-		var oDiv = document.getElementsByTagName('div');
-		
+
+$(function () {
+	$(".mouseDir").mouseenter(function(event) {
+		var json = startanimation(this,event);
+		//TODO
+		$(this).find('span').animate({
+			top:'131px',
+			bottom: 0,
+			left: 0
+		},800);
+	});
+
+	$(".mouseDir").mouseleave(function (evnet) {
+		var json = _getDate(this,event);
+		$(this).find('span').animate({
+			top:json['top'],
+			bottom: "auto",
+			left: json['left']
+		},500);
+	})
+});
+	function _getDate (obj,e) {
+		var w = obj.offsetWidth;
+			h = obj.offsetHeight;
+			x = (e.clientX - obj.offsetLeft - (w / 2)) * (w > h ? (h / w) : 1),
+			y = (e.clientY - obj.offsetTop - (h / 2)) * (h > w ? (w / h) : 1),
+			direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4;
+		var pointr = {x:e.clientX,y:e.clientY,w:obj.offsetWidth};
+		var span = obj.children.item(1);
+		var json = {};
+
+		if (typeof(direction)=="number") {
+			if (direction == 0 || direction == 3) {
+				console.log('上');
+				json['top'] = pointr.y-20+"px";
+				json['left'] =-pointr.w+pointr.x+"px";
+			}else{
+				json['top'] = pointr.y-20+"px";
+				json['left'] = pointr.x+"px";
+			}
+		}else{
+			return;
+		}
+		return json;
 	}
+
+		// function startanimation (obj,e) {
+		// 	var w = obj.offsetWidth;
+		// 		h = obj.offsetHeight;
+		// 		x = (e.clientX - obj.offsetLeft - (w / 2)) * (w > h ? (h / w) : 1),
+		// 		y = (e.clientY - obj.offsetTop - (h / 2)) * (h > w ? (w / h) : 1),
+		// 		direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4;
+		// 	var pointr = {x:e.clientX,y:e.clientY,w:obj.offsetWidth};
+		// 	var span = obj.children.item(1);
+		// 	// 清空
+		// 	span.style['top'] = "";
+		// 	span.style['left'] = "";
+		// 	span.style['right'] = "";
+		// 	// 初始化
+		// 	if (typeof(direction)=="number") {
+
+		// 		if (direction == 0 || direction == 3) {
+		// 			console.log('上');
+		// 			span.style['top'] = pointr.y-20+"px";
+		// 			span.style['left'] =-pointr.w+pointr.x+"px";
+		// 		}else{
+		// 			span.style['top'] = pointr.y-20+"px";
+		// 			span.style['left'] = pointr.x+"px";
+		// 		}
+		// 		// else if(direction == 1){
+		// 		// 	console.log('右');
+		// 		// 	// span.style['top'] = pointr.y-20+"px";
+		// 		// 	// span.style['left'] = pointr.x+"px";
+		// 		// }else if(direction == 2){
+		// 		// 	console.log('下');
+		// 		// 	// span.style['top'] = pointr.y-20+"px";
+		// 		// 	// span.style['left'] = pointr.x+"px";
+		// 		// }else if(direction == 3){
+		// 		// 	console.log('左');
+		// 		// 	// span.style['top'] = pointr.y-20+"px";
+		// 		// 	// span.style['left'] = pointr.x+"px";
+		// 		// }
+		// 	}else{
+		// 		return;
+		// 	}
+		// 	console.log(JSON.stringify({top:span.style['top'],left:span.style['left']}));
+		// 	return {top:span.style['top'],left:span.style['left']};
+		// }
+
+	// 	// function _getDir (obj,json,fn) {
+	// 	// 	var flag = true;
+	// 	// 	clearInterval(obj.timer);
+	// 	// 	obj.timer = setInterval(function(e) {
+	// 	// 		var left = Math.round(parseInt(obj.children.item(1).style['left']));
+	// 	// 		var top = Math.round(parseInt(obj.children.item(1).style['top']));
+	// 	// 		var height = parseInt(obj.children.item(1).offsetHeight);
+	// 	// 		var oDiv = parseInt(obj.offsetHeight);
+
+	// 	// 		if (top+height > oDiv) {
+	// 	// 			obj.children.item(1).style['botton'] = "0px";
+	// 	// 		}else{
+	// 	// 			obj.children.item(1).style['top'] = (top+20) +"px";
+	// 	// 		}
+
+	// 	// 		if (left>0) {
+	// 	// 			obj.children.item(1).style['left'] = (left-10) +"px";
+	// 	// 		}else{
+	// 	// 			obj.children.item(1).style['left'] = "0px";
+	// 	// 		}
+
+	// 	// 	},30)
+	// 	// }
+
+	// 	// function getStyle(obj, attr) {
+	// 	// 	if (obj.currentStyle) { /*IE*/
+	// 	// 		return obj.currentStyle[attr];
+	// 	// 	} else { /*Firfox*/
+	// 	// 		return getComputedStyle(obj, false)[attr];
+	// 	// 	}
+	// 	// }
+
+	// }
 
 </script>
 </html>
